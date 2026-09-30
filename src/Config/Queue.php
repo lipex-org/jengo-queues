@@ -15,7 +15,7 @@ class Queue extends BaseConfig
     public string $default = 'sync';
 
     /**
-     * Prefix for queue names (useful for Redis keys and tables).
+     * Prefix for queue names (useful for Redis keys).
      */
     public string $prefix = 'jengo_';
 
@@ -28,11 +28,10 @@ class Queue extends BaseConfig
             'queue'  => 'default',
         ],
         'database' => [
-            'driver'       => 'database',
-            'table'        => 'queue_jobs',
-            'queue'        => 'default',
-            'retryAfter'   => 90,
-            'DBGroup'      => 'default',
+            'driver'     => 'database',
+            'queue'      => 'default',
+            'retryAfter' => 90,
+            'DBGroup'    => 'default',
         ],
         'redis' => [
             'driver'     => 'redis',
@@ -53,8 +52,6 @@ class Queue extends BaseConfig
      * Failed jobs storage settings.
      */
     public array $failed = [
-        'driver'   => 'database',
-        'table'    => 'queue_failed_jobs',
-        'DBGroup'  => 'default',
+        'DBGroup' => 'default',
     ];
 }

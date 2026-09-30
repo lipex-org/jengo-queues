@@ -13,7 +13,9 @@ use Throwable;
 
 class DatabaseQueueDriver extends AbstractQueueDriver
 {
-    protected string $table;
+    public const TABLE = 'queue_jobs';
+
+    protected string $table = self::TABLE;
     protected string $dbGroup;
     protected int $retryAfter;
     protected ?BaseConnection $db = null;
@@ -22,7 +24,6 @@ class DatabaseQueueDriver extends AbstractQueueDriver
     {
         parent::__construct($config, $prefix);
 
-        $this->table = (string) ($config['table'] ?? 'queue_jobs');
         $this->dbGroup = (string) ($config['DBGroup'] ?? 'default');
         $this->retryAfter = (int) ($config['retryAfter'] ?? 90);
     }

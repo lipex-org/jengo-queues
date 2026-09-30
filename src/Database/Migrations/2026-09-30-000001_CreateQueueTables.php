@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Database\Migrations;
+declare(strict_types=1);
+
+namespace Jengo\Queues\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 

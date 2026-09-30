@@ -11,7 +11,7 @@ Documentation: https://lipex-org.github.io/jengophp.com/packages/queues
 ```bash
 composer require jengo/queues
 php spark jengo:install queue
-php spark migrate
+php spark migrate --all
 ```
 
 ---

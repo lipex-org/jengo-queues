@@ -12,13 +12,14 @@ use Throwable;
 
 class DatabaseFailedJobProvider implements FailedJobProviderInterface
 {
-    protected string $table;
+    public const TABLE = 'queue_failed_jobs';
+
+    protected string $table = self::TABLE;
     protected string $dbGroup;
     protected ?BaseConnection $db = null;
 
     public function __construct(array $config = [])
     {
-        $this->table = (string) ($config['table'] ?? 'queue_failed_jobs');
         $this->dbGroup = (string) ($config['DBGroup'] ?? 'default');
     }
 

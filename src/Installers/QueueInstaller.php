@@ -16,7 +16,7 @@ class QueueInstaller extends AbstractInstaller
 
     public static function description(): string
     {
-        return 'Install Queue management (Redis, Database, Sync) and publish migrations and configuration';
+        return 'Publish Jengo Queues configuration (app/Config/Queue.php)';
     }
 
     public static function reasonForSkipping(): string
@@ -33,7 +33,6 @@ class QueueInstaller extends AbstractInstaller
     {
         $this->addRun();
 
-        // 1. Publish Config
         $destConfig = APPPATH . 'Config/Queue.php';
         if (!file_exists($destConfig)) {
             $source = __DIR__ . '/../Config/Queue.php';
@@ -51,17 +50,6 @@ class QueueInstaller extends AbstractInstaller
 
             $this->writeFile($destConfig, $content);
             CLI::write('Published Config/Queue.php successfully.', 'green');
-        }
-
-        // 2. Publish Migration
-        $migrationName = date('Y-m-d-His') . '_create_queue_tables.php';
-        $destMigration = APPPATH . 'Database/Migrations/' . $migrationName;
-        $stubMigration = __DIR__ . '/../Publisher/Stubs/Migrations/2026-09-30-000001_create_queue_tables.php';
-
-        if (file_exists($stubMigration) && !file_exists($destMigration)) {
-            $content = (string) file_get_contents($stubMigration);
-            $this->writeFile($destMigration, $content);
-            CLI::write("Published migration {$migrationName} successfully.", 'green');
         }
     }
 }

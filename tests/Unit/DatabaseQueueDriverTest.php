@@ -75,7 +75,7 @@ class DatabaseQueueDriverTest extends CIUnitTestCase
     public function it_pushes_and_pops_database_job(): void
     {
         $db = \Config\Database::connect('tests');
-        $driver = (new DatabaseQueueDriver(['table' => 'queue_jobs', 'DBGroup' => 'tests']))->setConnection($db);
+        $driver = (new DatabaseQueueDriver(['DBGroup' => 'tests']))->setConnection($db);
 
         $job = new DbTestJob('database-test');
         $id = $driver->push($job, '', 'default');
@@ -99,7 +99,7 @@ class DatabaseQueueDriverTest extends CIUnitTestCase
     public function it_delays_and_releases_database_job(): void
     {
         $db = \Config\Database::connect('tests');
-        $driver = (new DatabaseQueueDriver(['table' => 'queue_jobs', 'DBGroup' => 'tests']))->setConnection($db);
+        $driver = (new DatabaseQueueDriver(['DBGroup' => 'tests']))->setConnection($db);
 
         $job = new DbTestJob('delayed-test');
         $driver->later(3600, $job, '', 'default');
@@ -116,7 +116,7 @@ class DatabaseQueueDriverTest extends CIUnitTestCase
     public function database_failed_job_provider_stores_and_queries(): void
     {
         $db = \Config\Database::connect('tests');
-        $provider = (new DatabaseFailedJobProvider(['table' => 'queue_failed_jobs', 'DBGroup' => 'tests']))->setConnection($db);
+        $provider = (new DatabaseFailedJobProvider(['DBGroup' => 'tests']))->setConnection($db);
 
         $id = $provider->log('database', 'default', '{"foo":"bar"}', new RuntimeException('DB Error'));
         $this->assertGreaterThan(0, $id);
