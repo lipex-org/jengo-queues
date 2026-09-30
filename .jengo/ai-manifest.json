@@ -1,0 +1,87 @@
+{
+  "name": "jengo/queues",
+  "description": "Asynchronous job queue and worker management subsystem supporting Redis, Database, Sync, and Null drivers with automatic retry backoff, failed job handling, and test fakes.",
+  "contracts": [
+    {
+      "name": "Jengo\\Queues\\Contracts\\ShouldQueue",
+      "description": "Marker interface indicating that a job class should be dispatched to an asynchronous queue."
+    },
+    {
+      "name": "Jengo\\Queues\\Contracts\\JobInterface",
+      "description": "Contract for encapsulated worker jobs providing methods like fire(), delete(), release($delay), attempts(), and fail($exception)."
+    },
+    {
+      "name": "Jengo\\Queues\\Contracts\\QueueDriverInterface",
+      "description": "Queue driver implementation contract with push(), later(), pop(), size(), clear(), and status()."
+    },
+    {
+      "name": "Jengo\\Queues\\Contracts\\FailedJobProviderInterface",
+      "description": "Interface for storing and querying failed job logs."
+    }
+  ],
+  "traits": [
+    {
+      "name": "Jengo\\Queues\\Traits\\Queueable",
+      "description": "Provides fluent job configuration methods: onQueue(string), onConnection(string), delay(int), tries(int), timeout(int), backoff(int), and dispatch()."
+    },
+    {
+      "name": "Jengo\\Queues\\Traits\\InteractsWithQueue",
+      "description": "Allows job instances to interact with the underlying job runner: delete(), release($delay), attempts(), and setJob($job)."
+    }
+  ],
+  "facades_and_helpers": [
+    {
+      "signature": "dispatch(object|string $job, mixed $data = '', ?string $queue = null): string|int",
+      "description": "Helper to push a job immediately to the default queue."
+    },
+    {
+      "signature": "dispatch_later(int $delay, object|string $job, mixed $data = '', ?string $queue = null): string|int",
+      "description": "Helper to push a job to the default queue with a delay in seconds."
+    },
+    {
+      "signature": "queue(?string $connection = null): QueueManager|QueueDriverInterface",
+      "description": "Helper to access the QueueManager or a specific queue driver instance."
+    },
+    {
+      "class": "Jengo\\Queues\\Facades\\Queue",
+      "methods": [
+        "push($job, $data = '', $queue = null)",
+        "later($delay, $job, $data = '', $queue = null)",
+        "pop($queue = null)",
+        "size($queue = null)",
+        "clear($queue = null)",
+        "status()",
+        "connection($name = null)",
+        "fake()"
+      ]
+    }
+  ],
+  "cli_commands": [
+    {
+      "command": "php spark jengo:queue work [connection] [--queue=default] [--delay=0] [--sleep=3] [--tries=3] [--memory=128] [--timeout=60] [--max-jobs=0]",
+      "description": "Runs the worker daemon continuously processing jobs from queues."
+    },
+    {
+      "command": "php spark jengo:queue listen [connection] [--queue=default] [--delay=0] [--tries=3] [--sleep=3]",
+      "description": "Listens for and processes jobs synchronously."
+    },
+    {
+      "command": "php spark jengo:queue failed <list|retry|forget|flush|count> [id] [--queue=name] [--hours=48]",
+      "description": "Inspects, retries, deletes, or flushes failed jobs."
+    },
+    {
+      "command": "php spark jengo:queue clear [connection] [--queue=default] [--force]",
+      "description": "Purges all pending jobs from a queue."
+    },
+    {
+      "command": "php spark jengo:queue status [connection]",
+      "description": "Checks connectivity, driver health, and pending job count."
+    }
+  ],
+  "testing": [
+    {
+      "name": "Queue::fake()",
+      "description": "Swaps active drivers with an in-memory test fake supporting assertPushed(), assertPushedTimes(), assertPushedOn(), assertNotPushed(), and assertNothingPushed()."
+    }
+  ]
+}
