@@ -1,0 +1,44 @@
+<?php
+
+declare(strict_types=1);
+
+use Config\Services;
+use Jengo\Queues\Contracts\JobInterface;
+use Jengo\Queues\Facades\Queue;
+use Jengo\Queues\Support\QueueManager;
+
+if (!function_exists('queue')) {
+    /**
+     * Get the queue manager or a specific connection.
+     */
+    function queue(?string $connection = null): QueueManager|\Jengo\Queues\Contracts\QueueDriverInterface
+    {
+        $manager = Services::queues();
+
+        if ($connection !== null) {
+            return $manager->connection($connection);
+        }
+
+        return $manager;
+    }
+}
+
+if (!function_exists('dispatch')) {
+    /**
+     * Dispatch a job to the queue.
+     */
+    function dispatch(object|string $job, mixed $data = '', ?string $queue = null): string|int
+    {
+        return Queue::push($job, $data, $queue);
+    }
+}
+
+if (!function_exists('dispatch_later')) {
+    /**
+     * Dispatch a job to the queue with a delay.
+     */
+    function dispatch_later(int $delay, object|string $job, mixed $data = '', ?string $queue = null): string|int
+    {
+        return Queue::later($delay, $job, $data, $queue);
+    }
+}
