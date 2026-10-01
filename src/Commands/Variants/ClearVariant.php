@@ -39,11 +39,11 @@ class ClearVariant implements CommandVariantInterface
     {
         $connection = $params[0] ?? (string) (CLI::getOption('connection') ?? 'default');
         $queue      = (string) (CLI::getOption('queue') ?? 'default');
-        $force      = (bool) CLI::getOption('force');
+        $force      = (bool) (CLI::getOption('force') ?? false);
 
-        if (!$force && CLI::isCLI()) {
-            $confirm = CLI::prompt("Are you sure you want to clear the [{$queue}] queue on [{$connection}]?", ['y', 'n'], 'n');
-            if ($confirm !== 'y') {
+        if (!$force) {
+            $confirm = CLI::prompt("Are you sure you want to clear the [{$queue}] queue on [{$connection}]? (y/n)", 'n');
+            if (strtolower(trim($confirm)) !== 'y') {
                 CLI::write('Clear operation cancelled.', 'yellow');
                 return;
             }

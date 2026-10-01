@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Jengo\Queues\Contracts;
 
+use Jengo\Queues\Entities\JobPayload;
+
 interface QueueDriverInterface
 {
     /**
@@ -26,6 +28,15 @@ interface QueueDriverInterface
      * @return string|int
      */
     public function later(int $delay, object|string $job, mixed $data = '', ?string $queue = null): string|int;
+
+    /**
+     * Push a raw serialized payload onto the queue.
+     *
+     * @param JobPayload|string $payload
+     * @param string|null $queue
+     * @return string|int
+     */
+    public function pushRaw(JobPayload|string $payload, ?string $queue = null): string|int;
 
     /**
      * Pop the next job off of the queue.

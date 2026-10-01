@@ -13,6 +13,9 @@ class FakeRedisClient
     public function rPush(string $key, string $value): int
     {
         $this->calls['rPush'][] = [$key, $value];
+        if (!isset($this->lists[$key])) {
+            $this->lists[$key] = [];
+        }
         $this->lists[$key][] = $value;
         return count($this->lists[$key]);
     }
@@ -20,7 +23,10 @@ class FakeRedisClient
     public function lPop(string $key): ?string
     {
         $this->calls['lPop'][] = $key;
-        return array_shift($this->lists[$key]) ?? null;
+        if (!isset($this->lists[$key]) || empty($this->lists[$key])) {
+            return null;
+        }
+        return array_shift($this->lists[$key]);
     }
 
     public function zAdd(string $key, float|int $score, string $member): int
@@ -32,7 +38,10 @@ class FakeRedisClient
 
     public function zRangeByScore(string $key, mixed $min, mixed $max, array $options = []): array
     {
-        return [];
+        if (!isset($this->zsets[$key])) {
+            return [];
+        }
+        return array_keys($this->zsets[$key]);
     }
 
     public function zRem(string $key, string $member): int

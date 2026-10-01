@@ -34,8 +34,9 @@ class ListenVariant implements CommandVariantInterface
         return [
             '--queue' => 'The names of the queues to listen to, comma-separated (default: default)',
             '--delay' => 'The number of seconds to delay failed jobs before retrying (default: 0)',
-            '--tries' => 'Number of times to attempt a job before failing it (default: 3)',
-            '--sleep' => 'Number of seconds to sleep when no job is available (default: 3)',
+            '--tries'    => 'Number of times to attempt a job before failing it (default: 3)',
+            '--sleep'    => 'Number of seconds to sleep when no job is available (default: 3)',
+            '--max-jobs' => 'The number of jobs to process before stopping (default: 0 / unlimited)',
         ];
     }
 
@@ -46,6 +47,7 @@ class ListenVariant implements CommandVariantInterface
         $delay      = (int) (CLI::getOption('delay') ?? 0);
         $tries      = (int) (CLI::getOption('tries') ?? 3);
         $sleep      = (int) (CLI::getOption('sleep') ?? 3);
+        $maxJobs    = (int) (CLI::getOption('max-jobs') ?? 0);
 
         CLI::write("Listening for jobs on [{$connection}] queue [{$queue}]...", 'green');
 
@@ -69,7 +71,8 @@ class ListenVariant implements CommandVariantInterface
             queue: $queue,
             delay: $delay,
             sleep: $sleep,
-            maxTries: $tries
+            maxTries: $tries,
+            maxJobs: $maxJobs
         );
     }
 }

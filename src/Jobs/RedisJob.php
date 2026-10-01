@@ -49,10 +49,12 @@ class RedisJob implements JobInterface
     {
         $this->driver->deleteReserved($this->queue, $this->rawJob);
 
+        $instance = $this->payload->resolveInstance();
+
         if ($delay > 0) {
-            $this->driver->later($delay, $this->payload->command, '', $this->queue);
+            $this->driver->later($delay, $instance, '', $this->queue);
         } else {
-            $this->driver->push($this->payload->command, '', $this->queue);
+            $this->driver->push($instance, '', $this->queue);
         }
     }
 
