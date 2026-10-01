@@ -2,40 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Jengo\Queues\Tests\Unit;
+namespace Tests\Unit;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Jengo\Queues\Contracts\ShouldQueue;
 use Jengo\Queues\Drivers\NullQueueDriver;
 use Jengo\Queues\Drivers\SyncQueueDriver;
-use Jengo\Queues\Traits\InteractsWithQueue;
-use Jengo\Queues\Traits\Queueable;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
-
-class ExecutableJob implements ShouldQueue
-{
-    use Queueable;
-    use InteractsWithQueue;
-
-    public static bool $executed = false;
-
-    public function handle(): void
-    {
-        self::$executed = true;
-    }
-}
-
-class FailingJob implements ShouldQueue
-{
-    use Queueable;
-    use InteractsWithQueue;
-
-    public function handle(): void
-    {
-        throw new RuntimeException('Intentional job failure');
-    }
-}
+use Tests\Support\Jobs\ExecutableJob;
+use Tests\Support\Jobs\FailingJob;
 
 class SyncAndNullDriverTest extends CIUnitTestCase
 {

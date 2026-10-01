@@ -2,26 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Jengo\Queues\Tests\Unit;
+namespace Tests\Unit;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Jengo\Queues\Config\Queue as QueueConfig;
-use Jengo\Queues\Contracts\ShouldQueue;
 use Jengo\Queues\Drivers\NullQueueDriver;
 use Jengo\Queues\Drivers\SyncQueueDriver;
 use Jengo\Queues\Facades\Queue;
 use Jengo\Queues\Support\QueueManager;
-use Jengo\Queues\Traits\Queueable;
 use PHPUnit\Framework\Attributes\Test;
-
-class ManagerHelperJob implements ShouldQueue
-{
-    use Queueable;
-
-    public function handle(): void
-    {
-    }
-}
+use Tests\Support\Jobs\ManagerHelperJob;
 
 class QueueManagerTest extends CIUnitTestCase
 {

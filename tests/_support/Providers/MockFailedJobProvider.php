@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jengo\Queues\Tests\Support;
+namespace Tests\Support\Providers;
 
 use Jengo\Queues\Contracts\FailedJobProviderInterface;
 use Jengo\Queues\Entities\FailedJob;

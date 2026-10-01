@@ -2,42 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Jengo\Queues\Tests\Unit;
+namespace Tests\Unit;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Jengo\Queues\Contracts\ShouldQueue;
 use Jengo\Queues\Facades\Queue;
 use Jengo\Queues\Testing\QueueFake;
 use Jengo\Queues\Testing\QueueTestAssertionsTrait;
-use Jengo\Queues\Traits\Queueable;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\AssertionFailedError;
-
-class TestEmailJob implements ShouldQueue
-{
-    use Queueable;
-
-    public function __construct(public string $recipient)
-    {
-    }
-
-    public function handle(): void
-    {
-    }
-}
-
-class TestNotificationJob implements ShouldQueue
-{
-    use Queueable;
-
-    public function __construct(public string $title)
-    {
-    }
-
-    public function handle(): void
-    {
-    }
-}
+use Tests\Support\Jobs\TestEmailJob;
+use Tests\Support\Jobs\TestNotificationJob;
 
 class QueueFakeTest extends CIUnitTestCase
 {

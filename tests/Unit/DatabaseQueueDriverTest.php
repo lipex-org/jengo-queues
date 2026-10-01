@@ -2,34 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Jengo\Queues\Tests\Unit;
+namespace Tests\Unit;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Jengo\Queues\Contracts\ShouldQueue;
 use Jengo\Queues\Drivers\DatabaseQueueDriver;
 use Jengo\Queues\Jobs\DatabaseJob;
 use Jengo\Queues\Support\DatabaseFailedJobProvider;
-use Jengo\Queues\Traits\InteractsWithQueue;
-use Jengo\Queues\Traits\Queueable;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
-
-class DbTestJob implements ShouldQueue
-{
-    use Queueable;
-    use InteractsWithQueue;
-
-    public static int $handledCount = 0;
-
-    public function __construct(public string $text = 'default')
-    {
-    }
-
-    public function handle(): void
-    {
-        self::$handledCount++;
-    }
-}
+use Tests\Support\Jobs\DbTestJob;
 
 class DatabaseQueueDriverTest extends CIUnitTestCase
 {

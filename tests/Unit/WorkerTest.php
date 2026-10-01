@@ -2,48 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Jengo\Queues\Tests\Unit;
+namespace Tests\Unit;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Jengo\Queues\Config\Queue as QueueConfig;
-use Jengo\Queues\Contracts\ShouldQueue;
-use Jengo\Queues\Entities\JobPayload;
 use Jengo\Queues\Support\FailedJobManager;
 use Jengo\Queues\Support\QueueManager;
 use Jengo\Queues\Support\Worker;
-use Jengo\Queues\Testing\QueueFake;
-use Jengo\Queues\Tests\Support\MockFailedJobProvider;
-use Jengo\Queues\Traits\InteractsWithQueue;
-use Jengo\Queues\Traits\Queueable;
 use PHPUnit\Framework\Attributes\Test;
-use RuntimeException;
-
-class WorkerSuccessJob implements ShouldQueue
-{
-    use Queueable;
-    use InteractsWithQueue;
-
-    public static int $runCount = 0;
-
-    public function handle(): void
-    {
-        self::$runCount++;
-    }
-}
-
-class WorkerFailJob implements ShouldQueue
-{
-    use Queueable;
-    use InteractsWithQueue;
-
-    public static int $attemptCount = 0;
-
-    public function handle(): void
-    {
-        self::$attemptCount++;
-        throw new RuntimeException('Job exploded');
-    }
-}
+use Tests\Support\Jobs\WorkerFailJob;
+use Tests\Support\Jobs\WorkerSuccessJob;
+use Tests\Support\Providers\MockFailedJobProvider;
 
 class WorkerTest extends CIUnitTestCase
 {

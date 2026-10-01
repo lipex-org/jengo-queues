@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jengo\Queues\Tests\Unit;
+namespace Tests\Unit;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Jengo\Queues\Commands\QueueCommand;

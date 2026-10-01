@@ -27,7 +27,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Jengo\\Queues\\Tests\\": "tests/"
+      "Tests\\": "tests/",
+      "Tests\\Support\\": "tests/_support/"
     }
   },
   "extra": {

@@ -2,27 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Jengo\Queues\Tests\Unit;
+namespace Tests\Unit;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Jengo\Queues\Contracts\ShouldQueue;
 use Jengo\Queues\Entities\JobPayload;
-use Jengo\Queues\Traits\Queueable;
 use PHPUnit\Framework\Attributes\Test;
-
-class SampleTestJob implements ShouldQueue
-{
-    use Queueable;
-
-    public function __construct(public string $param1 = 'hello', public int $param2 = 42)
-    {
-    }
-
-    public function handle(): void
-    {
-        // Sample execution
-    }
-}
+use Tests\Support\Jobs\SampleTestJob;
 
 class JobPayloadTest extends CIUnitTestCase
 {
