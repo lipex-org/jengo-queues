@@ -1,8 +1,22 @@
-# Jengo Queues
+<p align="center">
+  <a href="https://lipex-org.github.io/jengophp.com/">
+    <img src="https://raw.githubusercontent.com/lipex-org/docs/main/public/logo-full.png" width="220" alt="Jengo Logo">
+  </a>
+</p>
 
-An asynchronous job queue and worker management subsystem for CodeIgniter 4 and the Jengo ecosystem. Supports **Redis**, **Database (MySQL/PostgreSQL/SQLite)**, **Sync**, and **Null** drivers with support for delayed jobs, exponential backoff, worker daemons, and failed job handling.
+<h1 align="center">Jengo Queues</h1>
 
-Documentation: https://lipex-org.github.io/jengophp.com/packages/queues
+<p align="center">
+  <strong>Lightweight, high-throughput asynchronous background job queue engine with Redis, Database, and Sync drivers for CodeIgniter 4.</strong>
+</p>
+
+<p align="center">
+  <a href="https://lipex-org.github.io/jengophp.com/packages/queues"><strong>Documentation</strong></a> •
+  <a href="https://github.com/lipex-org/queues/blob/main/LICENSE"><strong>License</strong></a> •
+  <a href="https://github.com/lipex-org/queues/issues"><strong>Issues</strong></a>
+</p>
+
+---
 
 ---
 
