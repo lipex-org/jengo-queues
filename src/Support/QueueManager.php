@@ -57,6 +57,12 @@ class QueueManager
         $this->config->default = $name;
     }
 
+    public function defer(\Closure|callable|array|string $callback, mixed ...$args): string|int
+    {
+        $job = new \Jengo\Queues\Jobs\DeferredCallbackJob($callback, $args);
+        return $this->connection()->push($job);
+    }
+
     public function extend(string $driver, Closure $callback): self
     {
         $this->customCreators[$driver] = $callback;

@@ -42,3 +42,14 @@ if (!function_exists('dispatch_later')) {
         return Queue::later($delay, $job, $data, $queue);
     }
 }
+
+if (!function_exists('defer')) {
+    /**
+     * Defer execution of a closure, callback, or callable to the default background queue.
+     */
+    function defer(\Closure|callable|array|string $callback, mixed ...$args): string|int
+    {
+        return Queue::defer($callback, ...$args);
+    }
+}
+

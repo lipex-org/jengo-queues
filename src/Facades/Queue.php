@@ -15,6 +15,7 @@ use Jengo\Queues\Testing\QueueFake;
  * @method static QueueDriverInterface connection(?string $name = null)
  * @method static string|int push(object|string $job, mixed $data = '', ?string $queue = null)
  * @method static string|int later(int $delay, object|string $job, mixed $data = '', ?string $queue = null)
+ * @method static string|int defer(\Closure|callable|array|string $callback, mixed ...$args)
  * @method static JobInterface|null pop(?string $queue = null)
  * @method static int size(?string $queue = null)
  * @method static int clear(?string $queue = null)
