@@ -63,6 +63,12 @@ class QueueManager
         return $this->connection()->push($job);
     }
 
+    public function deferLater(int $delay, \Closure|callable|array|string $callback, mixed ...$args): string|int
+    {
+        $job = new \Jengo\Queues\Jobs\DeferredCallbackJob($callback, $args);
+        return $this->connection()->later($delay, $job);
+    }
+
     public function extend(string $driver, Closure $callback): self
     {
         $this->customCreators[$driver] = $callback;

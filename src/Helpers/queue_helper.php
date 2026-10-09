@@ -53,3 +53,14 @@ if (!function_exists('defer')) {
     }
 }
 
+if (!function_exists('defer_later')) {
+    /**
+     * Defer execution of a closure, callback, or callable to the background queue with a delay.
+     */
+    function defer_later(int $delay, \Closure|callable|array|string $callback, mixed ...$args): string|int
+    {
+        return Queue::deferLater($delay, $callback, ...$args);
+    }
+}
+
+

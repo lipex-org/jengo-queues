@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jengo\Queues\Jobs;
 
+use Jengo\Base\Container\Container;
 use Jengo\Queues\Contracts\JobInterface;
 use Jengo\Queues\Contracts\QueueDriverInterface;
 use Jengo\Queues\Entities\JobPayload;
@@ -34,7 +35,7 @@ class GenericJob implements JobInterface
         }
 
         if (method_exists($instance, 'handle')) {
-            $instance->handle();
+            Container::getInstance()->call([$instance, 'handle']);
         }
     }
 
@@ -74,7 +75,11 @@ class GenericJob implements JobInterface
     {
         $instance = $this->payload->resolveInstance();
         if ($e !== null && method_exists($instance, 'failed')) {
-            $instance->failed($e);
+            Container::getInstance()->call([$instance, 'failed'], [
+                'exception' => $e,
+                'e' => $e,
+                'throwable' => $e,
+            ]);
         }
         $this->delete();
     }

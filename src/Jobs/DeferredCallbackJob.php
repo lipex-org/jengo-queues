@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jengo\Queues\Jobs;
 
 use Closure;
+use Jengo\Base\Container\Container;
 use Jengo\Queues\Traits\Queueable;
 use Laravel\SerializableClosure\SerializableClosure;
 use Throwable;
@@ -38,7 +39,7 @@ class DeferredCallbackJob
     {
         $callable = $this->resolveCallable();
 
-        $callable(...$this->arguments);
+        Container::getInstance()->call($callable, $this->arguments);
     }
 
     /**
